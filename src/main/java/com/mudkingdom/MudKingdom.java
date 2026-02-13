@@ -2,10 +2,12 @@ package com.mudkingdom;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.mudkingdom.commands.CommandHandler;
 import com.mudkingdom.listeners.PlayerJoinListener;
 import com.mudkingdom.managers.MessageManager;
 import com.mudkingdom.managers.PlayerDataManager;
 import com.mudkingdom.managers.VersionManager;
+
 
 public class MudKingdom extends JavaPlugin {
 
@@ -35,6 +37,8 @@ public class MudKingdom extends JavaPlugin {
         messageManager = new MessageManager(this);
         playerDataManager = new PlayerDataManager(this);
         versionManager = new VersionManager(this, playerDataManager, messageManager);
+        
+        this.getCommand("mudkingdom").setExecutor(new CommandHandler());
 
         getServer().getPluginManager().registerEvents(
             new PlayerJoinListener(playerDataManager, versionManager), 
