@@ -1,6 +1,0 @@
-name: MudKingdom
-version: '1.0.0'
-main: com.mudkingdom.MudKingdom
-api-version: '1.21'
-author: Zewatara
-description: A Minecraft plugin for MudKingdom
