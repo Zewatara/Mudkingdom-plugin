@@ -5,12 +5,20 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandHandler implements CommandExecutor {
     
+    private final CommandConfig configCommand;
+    private final CommandAreas areasCommand;
+    
+    public CommandHandler(JavaPlugin plugin) {
+        this.configCommand = new CommandConfig(plugin);
+        this.areasCommand = new CommandAreas();
+    }
+    
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        
         if (sender == null || args == null) {
             return false;
         }
@@ -31,7 +39,7 @@ public class CommandHandler implements CommandExecutor {
             Player player = (Player) sender;
             
             if (player.hasPermission("mudkingdom.areas") || player.isOp()) {
-                player.sendMessage("§aAreas command - you have permission!");
+                //areasCommand.execute();
             } else {
                 player.sendMessage("§cYou don't have permission!");
             }
@@ -46,7 +54,7 @@ public class CommandHandler implements CommandExecutor {
             }
             
             if (sender.hasPermission("mudkingdom.config") || sender.isOp()) {
-                sender.sendMessage("§aConfig command - you have permission!");
+                configCommand.execute(sender, args);
             } else {
                 sender.sendMessage("§cYou don't have permission!");
             }

@@ -1,5 +1,6 @@
 package com.mudkingdom;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mudkingdom.commands.CommandHandler;
@@ -38,8 +39,13 @@ public class MudKingdom extends JavaPlugin {
         playerDataManager = new PlayerDataManager(this);
         versionManager = new VersionManager(this, playerDataManager, messageManager);
         
-        this.getCommand("mudkingdom").setExecutor(new CommandHandler());
-
+        PluginCommand command = this.getCommand("mudkingdom");
+        if (command != null) {
+            command.setExecutor(new CommandHandler(this));
+        } else {
+            getLogger().severe("Failed to register command 'mudkingdom' - check plugin.yml!");
+        }
+        
         getServer().getPluginManager().registerEvents(
             new PlayerJoinListener(playerDataManager, versionManager), 
             this
